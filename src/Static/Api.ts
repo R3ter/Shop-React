@@ -8,6 +8,8 @@ type APIs = keyof typeof AllAPIs;
 export const fetchData = (api: APIs, extension?: string, req?: RequestInit) => {
   return async () => {
     const res = await fetch(AllAPIs[api] + (extension || ""), { ...req });
-    return res.json();
+
+    const data = res.json();
+    return data;
   };
 };

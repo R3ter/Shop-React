@@ -14,7 +14,7 @@ import DialogForm from "../../Components/DialogForm/DialogForm";
 
 export default () => {
   const id = useParams().id;
-  const { data, isLoading, isFetching } = useQuery(
+  const { data, isLoading, isFetching, refetch } = useQuery(
     "shoeInfo",
     fetchData("OneShoe", id)
   );
@@ -32,22 +32,23 @@ export default () => {
     }
   }, [dialog]);
   const { mutate: deleteMutation } = useMutation(
-    "DeleteElement",
     fetchData("DeleteShoe", id, { method: "DELETE" })
   );
-  const param = useRef<any>();
-  // const { mutate: updateMutation } = useMutation(
-  //   "DUpdateElement",
-  //   fetchData("DeleteShoe", id, {
-  //     method: "PUT",
-  //     body: JSON.stringify({
-  //       name: param.current.titleText,
-  //       image: param.current.imageText,
-  //       Description: param.current.descText,
-  //       price: param.current.price,
-  //     }),
-  //   })
-  // );
+  const { mutate: updateMutation } = useMutation((variables: any) => {
+    return fetch("https://63f74ea0833c7c9c60810d71.mockapi.io/Shoes/" + id, {
+      method: "put",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: variables.titleText,
+        image: variables.imageText,
+        Description: variables.descText,
+        price: variables.price,
+      }),
+    });
+  });
   return (
     <div className="ShoePage">
       {data && <ProductMainImage image={data.image} id={id || ""} />}
@@ -113,24 +114,32 @@ export default () => {
           price={data.price}
           title={data.name}
           describe={data.Description}
-          onAgree={({ titleText, descText, imageText, priceText }) => {
-            param.current = { titleText, descText, imageText, priceText };
-            // setDialog({
-            //   dialog: false,
-            //   navigate: false,
-            //   loading: true,
-            //   updateDialog: false,
-            // });
+          onAgree={(a) => {
             setDialog({
               dialog: false,
               navigate: false,
-              loading: false,
+              loading: true,
               updateDialog: false,
             });
-            // updateMutation(undefined, {
-            //   onSuccess() {
-            //   },
-            // });
+            updateMutation(
+              {
+                titleText: a.arg1.current.value,
+                descText: a.arg2.current.value,
+                imageText: a.arg3.current.value,
+                priceText: a.arg4.current.value,
+              },
+              {
+                onSuccess(data) {
+                  refetch();
+                  setDialog({
+                    dialog: false,
+                    navigate: false,
+                    loading: false,
+                    updateDialog: false,
+                  });
+                },
+              }
+            );
           }}
           onRefuse={() => {
             setDialog({

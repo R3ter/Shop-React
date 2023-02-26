@@ -4,10 +4,10 @@ import { HiOutlineXMark } from "react-icons/hi2";
 import { GrCheckmark } from "react-icons/gr";
 import ArrowButton from "../ArrowButton/ArrowButton";
 import DialogInput from "./DialogInput/DialogInput";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 interface IProps {
   title: string;
-  describe?: string;
+  describe: string;
   imageLink: string;
   price: string;
   id: string | undefined;
@@ -16,17 +16,14 @@ interface IProps {
 }
 export default ({
   title,
-  describe,
+  describe = "",
   imageLink,
   id,
   price,
   onAgree = () => {},
   onRefuse = () => {},
 }: IProps) => {
-  const titleText = useRef<HTMLInputElement>();
-  const descText = useRef<HTMLTextAreaElement>();
-  const imageText = useRef<HTMLInputElement>();
-  const priceText = useRef<HTMLInputElement>();
+  const a = useRef<any>();
   return (
     <div className="Dialog">
       <div className="box">
@@ -38,21 +35,23 @@ export default ({
         <div>
           <h3>{"Edit"}</h3>
           <DialogInput
-            refs={{ titleText, descText, imageText, priceText }}
             imageLink={imageLink}
             price={price}
             id={id}
             description={describe}
             title={title}
+            onLoad={(arg1, arg2, arg3, arg4) => {
+              a.current = { arg1, arg2, arg3, arg4 };
+            }}
           />
           <div className="buttons">
             <ArrowButton
               type="Secondary"
               icon={<GrCheckmark size={25} />}
               title="submit"
-              onclick={() =>
-                onAgree({ titleText, descText, imageText, priceText })
-              }
+              onclick={() => {
+                onAgree(a.current);
+              }}
             />
             <ArrowButton
               type="Secondary"
