@@ -5,6 +5,7 @@ import Header from "./Components/Header/Header";
 import BrowsShoesPage from "./Pages/BrowseShoesPage/BrowsShoesPage";
 import ShoePage from "./Pages/ShoePage/ShoePage";
 import { QueryClient, QueryClientProvider } from "react-query";
+import AddShoePage from "./Pages/AddShoePage/AddShoePage";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: "/ShoePage/:id",
         element: <ShoePage />,
+      },
+      {
+        path: "/addItem",
+        element: <AddShoePage />,
       },
     ],
   },

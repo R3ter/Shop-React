@@ -51,35 +51,97 @@ export default () => {
   });
   return (
     <div className="ShoePage">
-      {data && <ProductMainImage image={data.image} id={id || ""} />}
-      {data && <ProductInfo {...data} />}
-      <div style={{ margin: 10, display: "flex" }}>
-        <ArrowButton
-          icon={<MdDelete size={30} />}
-          title="Delete"
-          type="Secondary"
-          onclick={() => {
-            setDialog({ ...dialog, dialog: true });
-          }}
-        />
-        <ArrowButton
-          icon={<AiTwotoneEdit size={30} />}
-          title="Edit"
-          type="Secondary"
-          onclick={() => {
-            setDialog({
-              dialog: false,
-              navigate: false,
-              loading: false,
-              updateDialog: true,
-            });
-          }}
-        />
-        {dialog.dialog && (
-          <Dialog
-            title="Are you sure you want to delete this ?"
-            describe="once you delete this you cant undo"
-            type="warning2Buttons"
+      <div>
+        {data && <ProductMainImage image={data.image} id={id || ""} />}
+        {data && <ProductInfo {...data} />}
+        <div style={{ margin: 10, display: "flex" }}>
+          <ArrowButton
+            icon={<MdDelete size={30} />}
+            title="Delete"
+            type="Secondary"
+            onclick={() => {
+              setDialog({ ...dialog, dialog: true });
+            }}
+          />
+          <ArrowButton
+            icon={<AiTwotoneEdit size={30} />}
+            title="Edit"
+            type="Secondary"
+            onclick={() => {
+              setDialog({
+                dialog: false,
+                navigate: false,
+                loading: false,
+                updateDialog: true,
+              });
+            }}
+          />
+          {dialog.dialog && (
+            <Dialog
+              title="Are you sure you want to delete this ?"
+              describe="once you delete this you cant undo"
+              type="warning2Buttons"
+              onRefuse={() => {
+                setDialog({
+                  dialog: false,
+                  navigate: false,
+                  loading: false,
+                  updateDialog: false,
+                });
+              }}
+              onAgree={() => {
+                setDialog({ ...dialog, loading: true });
+                deleteMutation(undefined, {
+                  onSuccess() {
+                    setDialog({
+                      dialog: false,
+                      navigate: true,
+                      loading: false,
+                      updateDialog: false,
+                    });
+                  },
+                });
+              }}
+            />
+          )}
+          {(dialog.loading || isLoading || isFetching) && (
+            <LoadingSpinner type="static" />
+          )}
+        </div>
+        {dialog.updateDialog && data && (
+          <DialogForm
+            id={id}
+            imageLink={data.image}
+            price={data.price}
+            title={data.name}
+            describe={data.Description}
+            onAgree={(a) => {
+              setDialog({
+                dialog: false,
+                navigate: false,
+                loading: true,
+                updateDialog: false,
+              });
+              updateMutation(
+                {
+                  titleText: a.arg1.current.value,
+                  descText: a.arg2.current.value,
+                  imageText: a.arg3.current.value,
+                  priceText: a.arg4.current.value,
+                },
+                {
+                  onSuccess(data) {
+                    refetch();
+                    setDialog({
+                      dialog: false,
+                      navigate: false,
+                      loading: false,
+                      updateDialog: false,
+                    });
+                  },
+                }
+              );
+            }}
             onRefuse={() => {
               setDialog({
                 dialog: false,
@@ -88,69 +150,9 @@ export default () => {
                 updateDialog: false,
               });
             }}
-            onAgree={() => {
-              setDialog({ ...dialog, loading: true });
-              deleteMutation(undefined, {
-                onSuccess() {
-                  setDialog({
-                    dialog: false,
-                    navigate: true,
-                    loading: false,
-                    updateDialog: false,
-                  });
-                },
-              });
-            }}
           />
         )}
-        {(dialog.loading || isLoading || isFetching) && (
-          <LoadingSpinner type="static" />
-        )}
       </div>
-      {dialog.updateDialog && data && (
-        <DialogForm
-          id={id}
-          imageLink={data.image}
-          price={data.price}
-          title={data.name}
-          describe={data.Description}
-          onAgree={(a) => {
-            setDialog({
-              dialog: false,
-              navigate: false,
-              loading: true,
-              updateDialog: false,
-            });
-            updateMutation(
-              {
-                titleText: a.arg1.current.value,
-                descText: a.arg2.current.value,
-                imageText: a.arg3.current.value,
-                priceText: a.arg4.current.value,
-              },
-              {
-                onSuccess(data) {
-                  refetch();
-                  setDialog({
-                    dialog: false,
-                    navigate: false,
-                    loading: false,
-                    updateDialog: false,
-                  });
-                },
-              }
-            );
-          }}
-          onRefuse={() => {
-            setDialog({
-              dialog: false,
-              navigate: false,
-              loading: false,
-              updateDialog: false,
-            });
-          }}
-        />
-      )}
     </div>
   );
 };

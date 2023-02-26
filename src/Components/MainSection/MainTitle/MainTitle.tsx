@@ -8,7 +8,6 @@ export default ({ title }: props) => {
   return (
     <div className="MainTitle">
       <h2>{title}</h2>
-      <ArrowButton title="wdawdwad"></ArrowButton>
     </div>
   );
 };
