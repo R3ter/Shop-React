@@ -110,6 +110,7 @@ export default () => {
         </div>
         {dialog.updateDialog && data && (
           <DialogForm
+            dialogTitle="Edit"
             id={id}
             imageLink={data.image}
             price={data.price}

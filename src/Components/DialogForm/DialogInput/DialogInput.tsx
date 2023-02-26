@@ -59,7 +59,7 @@ export default ({
       </label>
       <input
         ref={refsPrice}
-        type="text"
+        type="number"
         className="input"
         id="price"
         style={{ width: "20%" }}

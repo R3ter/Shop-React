@@ -6,20 +6,22 @@ import ArrowButton from "../ArrowButton/ArrowButton";
 import DialogInput from "./DialogInput/DialogInput";
 import { useEffect, useRef } from "react";
 interface IProps {
-  title: string;
-  describe: string;
-  imageLink: string;
-  price: string;
-  id: string | undefined;
+  title?: string;
+  describe?: string;
+  imageLink?: string;
+  price?: string;
+  id?: string | undefined;
+  dialogTitle?: string;
   onAgree?({}: any): void;
   onRefuse?(): void;
 }
 export default ({
-  title,
+  dialogTitle = "",
+  title = "",
   describe = "",
-  imageLink,
+  imageLink = "https://",
   id,
-  price,
+  price = "0",
   onAgree = () => {},
   onRefuse = () => {},
 }: IProps) => {
@@ -33,7 +35,7 @@ export default ({
           <RiErrorWarningLine style={{ margin: 20 }} color={"blue"} size={60} />
         </div>
         <div>
-          <h3>{"Edit"}</h3>
+          <h3>{dialogTitle}</h3>
           <DialogInput
             imageLink={imageLink}
             price={price}
