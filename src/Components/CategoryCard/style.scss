@@ -1,0 +1,18 @@
+.CategoryCard {
+  display: flex;
+  flex-direction: column;
+  overflow-wrap: normal;
+  margin: 10px;
+  .Image {
+    width: 25vw;
+    height: 25vw;
+    background-color: black;
+  }
+  .Title {
+    font-weight: 900;
+  }
+  .Description {
+    color: gray;
+    font-weight: 300;
+  }
+}

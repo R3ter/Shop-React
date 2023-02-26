@@ -1,0 +1,13 @@
+.ProductInfo {
+  color: white;
+  display: flex;
+  justify-content: center;
+  h3 {
+    margin: 20px;
+  }
+  div {
+    width: 70%;
+    margin: auto;
+    max-width: 1000px;
+  }
+}

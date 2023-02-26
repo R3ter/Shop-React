@@ -1,0 +1,20 @@
+.MainSection {
+  .background {
+    width: 100%;
+    height: 100%;
+    background-image: url(https://cdn.shopify.com/s/files/1/0030/2075/0961/files/coddi_halloween2022_3_1000x.jpg);
+    .layer {
+      display: flex;
+      flex-direction: column;
+      background-image: linear-gradient(
+        rgba(255, 255, 255, 0),
+        rgba(0, 0, 0, 0.575)
+      );
+      width: 100%;
+      height: 100%;
+    }
+  }
+  width: 100%;
+  height: 60vh;
+  min-height: 1000px;
+}

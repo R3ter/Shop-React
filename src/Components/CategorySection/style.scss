@@ -1,0 +1,10 @@
+.CategorySection {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  div {
+    display: flex;
+    max-width: 700px;
+    justify-content: center;
+  }
+}
