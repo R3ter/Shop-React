@@ -5,12 +5,7 @@ interface IProps {
   imageLink: string;
   description: string | undefined;
   price: string;
-  refs: {
-    titleText: { current: HTMLInputElement | undefined };
-    descText: { current: HTMLTextAreaElement | undefined };
-    imageText: { current: HTMLInputElement | undefined };
-    priceText: { current: HTMLInputElement | undefined };
-  };
+  refs: any;
 }
 export default ({ description, id, imageLink, price, title, refs }: IProps) => {
   return (
