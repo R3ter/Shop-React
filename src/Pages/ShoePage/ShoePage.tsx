@@ -36,18 +36,18 @@ export default () => {
     fetchData("DeleteShoe", id, { method: "DELETE" })
   );
   const param = useRef<any>();
-  const { mutate: updateMutation } = useMutation(
-    "DUpdateElement",
-    fetchData("DeleteShoe", id, {
-      method: "PUT",
-      body: JSON.stringify({
-        name: param.current.titleText,
-        image: param.current.imageText,
-        Description: param.current.descText,
-        price: param.current.price,
-      }),
-    })
-  );
+  // const { mutate: updateMutation } = useMutation(
+  //   "DUpdateElement",
+  //   fetchData("DeleteShoe", id, {
+  //     method: "PUT",
+  //     body: JSON.stringify({
+  //       name: param.current.titleText,
+  //       image: param.current.imageText,
+  //       Description: param.current.descText,
+  //       price: param.current.price,
+  //     }),
+  //   })
+  // );
   return (
     <div className="ShoePage">
       {data && <ProductMainImage image={data.image} id={id || ""} />}
@@ -115,22 +115,22 @@ export default () => {
           describe={data.Description}
           onAgree={({ titleText, descText, imageText, priceText }) => {
             param.current = { titleText, descText, imageText, priceText };
+            // setDialog({
+            //   dialog: false,
+            //   navigate: false,
+            //   loading: true,
+            //   updateDialog: false,
+            // });
             setDialog({
               dialog: false,
               navigate: false,
-              loading: true,
+              loading: false,
               updateDialog: false,
             });
-            updateMutation(undefined, {
-              onSuccess() {
-                setDialog({
-                  dialog: false,
-                  navigate: false,
-                  loading: false,
-                  updateDialog: false,
-                });
-              },
-            });
+            // updateMutation(undefined, {
+            //   onSuccess() {
+            //   },
+            // });
           }}
           onRefuse={() => {
             setDialog({
