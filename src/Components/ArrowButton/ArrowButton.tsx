@@ -18,18 +18,47 @@ export default ({
 
   icon,
 }: IProps) => {
-  return (
-    <Link to={link || "#"}>
-      <div
-        onClick={() => {
-          onclick();
-        }}
-        className={"ArrowButton" + type}
-        style={{ ...style }}
-      >
-        <p>{title}</p>
-        {!icon ? <HiArrowSmRight size={30} /> : icon}
-      </div>
+  return link != "" ? (
+    <Link to={link}>
+      <Body
+        title={title}
+        type={type}
+        style={style}
+        onclick={onclick}
+        icon={icon}
+        link={link}
+      />
     </Link>
+  ) : (
+    <Body
+      title={title}
+      type={type}
+      style={style}
+      onclick={onclick}
+      icon={icon}
+      link={link}
+    />
+  );
+};
+const Body = ({
+  title,
+  type = "Primary",
+  style,
+  link = "",
+  onclick = () => {},
+
+  icon,
+}: IProps) => {
+  return (
+    <div
+      onClick={() => {
+        onclick();
+      }}
+      className={"ArrowButton" + type}
+      style={{ ...style }}
+    >
+      <p>{title}</p>
+      {!icon ? <HiArrowSmRight size={30} /> : icon}
+    </div>
   );
 };
